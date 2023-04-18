@@ -8,9 +8,13 @@ import requests
 from data_crawler import file_crawler
 
 
-def fetch_data(repo, dest, start_date, end_date):
+def noop(*_):
+    pass
+
+
+def fetch_data(repo, branch, dest, start_date, end_date):
     api_url = f"https://raw.githubusercontent.com/{repo}/master"
-    paths = file_crawler(repo)
+    paths = file_crawler(repo, branch, dest, log=noop)
 
     if not os.path.exists(dest):
         os.makedirs(dest)
@@ -23,6 +27,7 @@ def fetch_data(repo, dest, start_date, end_date):
     for week, paths in weeks.items():
         for path in paths:
             url = f"{api_url}/{path}"
+            url = url[:-1]  # get rid of the newline character
             r = requests.get(url)
             if r.status_code == 200:
                 week_file = f"{week}.txt"
@@ -32,8 +37,9 @@ def fetch_data(repo, dest, start_date, end_date):
                     for line in requestProcessor(r):
                         f.write(line)
             else:
-                print(f"Error: {r.status_code}")
-        progress(i, total, suffix=f"coconut")
+                print(f"Error: {r.status_code} {r.reason} '{url}'")
+                exit(1)
+        progress(i, total, suffix=f"complete")
         i += 1
 
 
@@ -111,9 +117,10 @@ def progress(count, total, suffix=""):
 
 
 if __name__ == "__main__":
-    start_date = "01-01-2023"
-    end_date = "31-12-2023"
     repo = "enriquegiottonini/conferencias_matutinas_amlo"
+    branch = "master"
     dest = "data"
+    start_date = "01-01-2018"
+    end_date = "31-12-2023"
     clean_data(dest)
-    fetch_data(repo, dest, start_date, end_date)
+    fetch_data(repo, branch, dest, start_date, end_date)

@@ -14,7 +14,7 @@ import os
 import requests
 
 
-def get_tree(repo, branch="master"):
+def get_tree(repo, branch):
     """Get the tree of a GitHub repo
     :param repo: str, the repo name
     :param branch: str, the branch name
@@ -41,7 +41,7 @@ def get_csv_files(tree):
     return files
 
 
-def file_crawler(repo, branch="master", dest="utils", log=lambda *_: None):
+def file_crawler(repo, branch, dest="utils", log=lambda *_: None):
     """Crawl the files in the GitHub repo
     :param repo: str, the repo name
     :param branch: str, the branch name
@@ -81,11 +81,10 @@ def get_cache(dest="utils"):
     dest_file_path = os.path.join(dest, "cache_paths.txt")
     paths = []
     with open(dest_file_path, "r") as f:
-        text = f.read()
-        for line in text.split(".csv"):
-            line = line.strip()
-            if line:
-                paths.append(line + ".csv")
+        for line in f:
+            # remove the newline character
+            line = line[:-1]
+            paths.append(line)
     return paths
 
 
@@ -106,7 +105,10 @@ def _print_all(paths):
 
 def main():
     repo = "enriquegiottonini/conferencias_matutinas_amlo"
-    csv_files = file_crawler(repo, save_cache)
+    branch = "master"
+    dest = "utils"
+    csv_files = file_crawler(repo, branch, dest, save_cache)
+    print(f"'{csv_files[0]}'")
     print(len(csv_files))
 
 
