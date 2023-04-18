@@ -43,13 +43,22 @@ def fetch_data(repo, branch, dest, start_date, end_date):
         i += 1
 
 
-def requestProcessor(request):
-    for line in request.text.splitlines()[
+# todo
+def processFileCsv(text):
+    for line in text.splitlines()[
         1:
     ]:  # get rid of the header and get only the text column
+        # check that line contains commas
+        if "," not in line:
+            continue
+
         line = line.split(",")[1]
         line = line.replace('"', " ")  # get rid of the quotes
         yield line
+
+
+def requestProcessor(request):
+    yield from processFileCsv(request.text)
 
 
 def clean_data(dest):
