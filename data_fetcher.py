@@ -15,6 +15,8 @@ def noop(*_):
 
 
 def fetch_data(repo, branch, dest, start_date, end_date):
+    """Fetch the data (text) from the GitHub repo"""
+
     if os.path.exists(dest) and len(os.listdir(dest)) > 0:
         print("Data already fetched")
         return
@@ -27,7 +29,7 @@ def fetch_data(repo, branch, dest, start_date, end_date):
 
     weeks = get_weeks(paths, start_date, end_date)
     total: int = len(weeks)
-    i: int = 1
+    ibar: int = 1
     for week, paths in weeks.items():
         for path in paths:
             url = f"{api_url}/{path}"
@@ -42,23 +44,26 @@ def fetch_data(repo, branch, dest, start_date, end_date):
                         f.write(line)
             else:
                 print(f"Error: {r.status_code} {r.reason} '{url}'")
-                exit(1)
-        progress(i, total, suffix=f"complete")
-        i += 1
+                exit(1)  # if one file fails, check the url and fix it
+        progress(ibar, total, suffix=f"complete")
+        ibar += 1
 
 
 def processFileCsv(text):
+    """Process the csv file, get the text column"""
     df = pd.read_csv(io.StringIO(text), sep=",", engine="python")
     for index, row in df.iterrows():
         yield row["Texto"]
 
 
 def requestProcessor(request):
+    """Process the request, pipeline for another file processor"""
     text = request.text
     yield from processFileCsv(text)
 
 
 def clean_data(dest):
+    """Clean the documents (week files) for a fresh download"""
     if os.path.exists(dest):
         shutil.rmtree(dest)
     os.makedirs(dest)
@@ -112,6 +117,7 @@ def file2date(file_name):
 
 # <script src="https://gist.github.com/vladignatyev/06860ec2040cb497f0f3.js"></script>
 def progress(count, total, suffix=""):
+    """Print a progress bar of data fetched"""
     bar_len = 60
     filled_len = int(round(bar_len * count / float(total)))
 
@@ -120,12 +126,3 @@ def progress(count, total, suffix=""):
 
     sys.stdout.write("[%s] %s%s ...%s\r" % (bar, percents, "%", suffix))
     sys.stdout.flush()  # As suggested by Rom Ruben
-
-
-if __name__ == "__main__":
-    repo = "enriquegiottonini/conferencias_matutinas_amlo"
-    branch = "master"
-    dest = "data"
-    start_date = "01-01-2018"
-    end_date = "31-12-2023"
-    fetch_data(repo, branch, dest, start_date, end_date)

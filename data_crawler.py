@@ -95,22 +95,3 @@ def clean_cache(dest="utils"):
     dest_file_path = os.path.join(dest, "cache_paths.txt")
     if os.path.exists(dest_file_path):
         os.remove(dest_file_path)
-
-
-def _print_all(paths):
-    for path in paths:
-        print(path)
-    print(len(paths))
-
-
-def main():
-    repo = "enriquegiottonini/conferencias_matutinas_amlo"
-    branch = "master"
-    dest = "utils"
-    csv_files = file_crawler(repo, branch, dest, save_cache)
-    print(f"'{csv_files[0]}'")
-    print(len(csv_files))
-
-
-if __name__ == "__main__":
-    main()
