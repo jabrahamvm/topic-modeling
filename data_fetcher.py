@@ -1,8 +1,10 @@
+import io
 import os
 import shutil
 import sys
 from datetime import datetime, timedelta
 
+import pandas as pd
 import requests
 
 from data_crawler import file_crawler
@@ -13,13 +15,15 @@ def noop(*_):
 
 
 def fetch_data(repo, branch, dest, start_date, end_date):
+    if os.path.exists(dest) and len(os.listdir(dest)) > 0:
+        print("Data already fetched")
+        return
+
     api_url = f"https://raw.githubusercontent.com/{repo}/master"
     paths = file_crawler(repo, branch, dest, log=noop)
 
     if not os.path.exists(dest):
         os.makedirs(dest)
-
-    clean_data(dest)
 
     weeks = get_weeks(paths, start_date, end_date)
     total: int = len(weeks)
@@ -43,22 +47,15 @@ def fetch_data(repo, branch, dest, start_date, end_date):
         i += 1
 
 
-# todo
 def processFileCsv(text):
-    for line in text.splitlines()[
-        1:
-    ]:  # get rid of the header and get only the text column
-        # check that line contains commas
-        if "," not in line:
-            continue
-
-        line = line.split(",")[1]
-        line = line.replace('"', " ")  # get rid of the quotes
-        yield line
+    df = pd.read_csv(io.StringIO(text), sep=",", engine="python")
+    for index, row in df.iterrows():
+        yield row["Texto"]
 
 
 def requestProcessor(request):
-    yield from processFileCsv(request.text)
+    text = request.text
+    yield from processFileCsv(text)
 
 
 def clean_data(dest):
@@ -131,5 +128,4 @@ if __name__ == "__main__":
     dest = "data"
     start_date = "01-01-2018"
     end_date = "31-12-2023"
-    clean_data(dest)
     fetch_data(repo, branch, dest, start_date, end_date)
