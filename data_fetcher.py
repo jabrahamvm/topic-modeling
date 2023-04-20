@@ -53,7 +53,7 @@ def processFileCsv(text):
     """Process the csv file, get the text column"""
     df = pd.read_csv(io.StringIO(text), sep=",", engine="python")
     for index, row in df.iterrows():
-        yield row["Texto"]
+        yield row["Texto"] + " "
 
 
 def requestProcessor(request):
