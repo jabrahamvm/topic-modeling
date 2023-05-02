@@ -1,0 +1,11 @@
+palabra_asociada,lista_palabras
+Fronteras e inmigración,"['centroamerico:0.0100', 'espanol:0.0080', 'canciller:0.0080', 'migrant:0.0080', 'fronterizo:0.0080', 'migratorio:0.0070', 'migracion:0.0070', 'grabacion:0.0050', 'helicoptero:0.0050', 'hermosillo:0.0050']"
+Salud y medicina,"['medicamento:0.0250', 'avion:0.0150', 'hospital:0.0120', 'senasico:0.0070', 'enfermedad:0.0050', 'basura:0.0050', 'epidemia:0.0050', 'licitacion:0.0040', 'pollo:0.0040', 'virus:0.0040']"
+La pandemia del COVID-19 y su impacto,"['nuevo_leon:0.0110', 'tamaulipa:0.0080', 'productor:0.0080', 'epidemia:0.0080', 'coronavirus:0.0080', 'evento:0.0060', 'recaudacion:0.0060', 'virus:0.0050', 'transmision:0.0050', 'enfermedad:0.0050']"
+Ley y crimen,"['inteligencia:0.0270', 'cartel:0.0240', 'feminicidio:0.0220', 'estadounidense:0.0210', 'fentanilo:0.0110', 'droga:0.0080', 'bloqueado:0.0080', 'aseguramiento:0.0070', 'influyente:0.0060', 'entramado:0.0060']"
+Aeropuertos y vuelos,"['aeropuerto_internacional:0.0330', 'minuto:0.0260', 'aifa:0.0250', 'pasajero:0.0180', 'acarreado:0.0180', 'futbol:0.0150', 'club:0.0150', 'terminal:0.0120', 'conectividad:0.0120', 'conectar:0.0090']"
+Relaciones políticas entre México y Perú,"['peru:0.0600', 'asilo:0.0210', 'noviembre:0.0200', 'alias:0.0160', 'embajador:0.0140', 'americo:0.0110', 'embajado:0.0110', 'peruano:0.0110', 'arma_corto:0.0110', 'continente:0.0090']"
+Problemas sociales y justicia penal,"['penal:0.0160', 'medicina_tradicional:0.0160', 'isla:0.0110', 'tarifa:0.0080', 'militarizacion:0.0070', 'accidente:0.0070', 'muro:0.0060', 'religioso:0.0060', 'recinto_fiscalizado:0.0050', 'aliar:0.0050']"
+Tren Maya,"['tramo:0.0350', 'maya:0.0340', 'fentanilo:0.0250', 'tren_maya:0.0240', 'campeche:0.0200', 'testigo:0.0170', 'zona_arqueologico:0.0150', 'yucatan:0.0140', 'lunir:0.0130', 'pan:0.0120']"
+Reformas políticas,"['bidir:0.0240', 'marchar:0.0180', 'marcha:0.0150', 'arma_largo:0.0130', 'inflacion:0.0110', 'arqueologico:0.0100', 'vinculado_proceso:0.0100', 'medico_especialista:0.0100', 'reforma_constitucional:0.0090', 'voto:0.0090']"
+COVID-19 y su vacunación,"['vacunacion:0.0470', 'dosis:0.0400', 'vacunar:0.0360', 'vacuno:0.0320', 'vacuna:0.0320', 'colimo:0.0110', 'tren:0.0110', 'vacunado:0.0100', 'bidir:0.0100', 'medicamento:0.0070']"
